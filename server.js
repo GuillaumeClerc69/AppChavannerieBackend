@@ -4,14 +4,12 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
-const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const User = require('./models/user');
 const Appointment = require('./models/appointement');
 const appointmentsRouter = require('./routes/appointments');
 const Mailjet = require('node-mailjet');
-require('dotenv').config();
 const mailjet = Mailjet.apiConnect(`${process.env.MJ_APIKEY_PUBLIC}`, `${process.env.MJ_APIKEY_PRIVATE}`);
 const moment = require('moment');
 const dayjs = require('dayjs');
@@ -20,6 +18,7 @@ moment.locale('fr');
 const { sendAppointmentEmail } = require('./utils/emails/emailRdvPsychiatre');
 const { sendResetPasswordEmail } = require('./utils/emails/emailResetPassword');
 const crypto = require('crypto');
+const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -220,8 +219,6 @@ console.log('date au post: ', date)
 
     let momentObj = moment(date);
     let formattedDate = momentObj.format('dddd DD MMMM YYYY');
-  
-    console.log(doctorEmail)
 
     await sendAppointmentEmail(patientEmail, patientFisrtname, patientLastname, doctor, formattedDate, startHour, endHour, location, date, doctorEmail);
 

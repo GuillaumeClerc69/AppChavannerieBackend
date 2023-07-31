@@ -1,5 +1,5 @@
-const Mailjet = require('node-mailjet');
 require('dotenv').config();
+const Mailjet = require('node-mailjet');
 const mailjet = Mailjet.apiConnect(`${process.env.MJ_APIKEY_PUBLIC}`, `${process.env.MJ_APIKEY_PRIVATE}`);
 const moment = require('moment');
 require('moment/locale/fr');
@@ -67,7 +67,7 @@ fs.writeFileSync(icsFilePath, icsFile);
 // Convert the ICS file to base64
   const icsFileBase64 = Buffer.from(icsFile).toString('base64');
 
-const hrefUrl = `http://localhost:5000/utils/ICSfiles/${dirName}/Cliquez.pour.ajouter.RDV.Agenda.ics`;
+const hrefUrl = `${process.env.REACT_APP_BACKEND_URL}/utils/ICSfiles/${dirName}/Cliquez.pour.ajouter.RDV.Agenda.ics`;
 console.log(hrefUrl)
 
 function deleteFolderAfterDelay(dirPath, delay) {
